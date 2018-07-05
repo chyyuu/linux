@@ -255,6 +255,10 @@ COND_SYSCALL_COMPAT(keyctl);
 
 /* arch/example/kernel/sys_example.c */
 
+/* lwipport/core/syscall.c */
+COND_SYSCALL(lwip_closesock);
+/* send/recv has already been defined in __ARCH_WANT_SYSCALL_DEPRECATED */
+
 /* mm/fadvise.c */
 COND_SYSCALL(fadvise64_64);
 

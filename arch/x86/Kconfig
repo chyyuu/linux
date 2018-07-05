@@ -2937,6 +2937,8 @@ config X86_DMA_REMAP
 config HAVE_GENERIC_GUP
 	def_bool y
 
+source "lwipport/Kconfig"
+
 source "net/Kconfig"
 
 source "drivers/Kconfig"
