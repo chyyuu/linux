@@ -85,7 +85,7 @@ sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout_ms)
 		down(*sem);
 		return 0;
 	} else {
-		int t = down_timeout(*sem, usecs_to_jiffies(jiffies));
+		int t = down_timeout(*sem, msecs_to_jiffies(jiffies));
 		if (t == -ETIME)
 			return SYS_ARCH_TIMEOUT;
 		return timeout_ms - 1; // stupid hack
@@ -113,11 +113,11 @@ sys_sem_signal(sys_sem_t *sem)
 err_t
 sys_mbox_new(sys_mbox_t *mb, int size)
 {
+	err_t err;
 	if (size > SYS_MBOX_SIZE)
 		return -ENOMEM;
 	*mb = kmalloc(sizeof(struct sys_mbox), GFP_KERNEL);
 	if (size == 0) size = SYS_MBOX_SIZE;
-	err_t err;
 	err = sys_sem_new(&(*mb)->free, size);
 	if (err < 0) return err;
 	err = sys_sem_new(&(*mb)->used, 0);
@@ -158,7 +158,7 @@ sys_mbox_trypost(sys_mbox_t *mb, void *msg)
 {
 	int ret = sys_arch_sem_wait(&(*mb)->free, 1);
 	if (ret == SYS_ARCH_TIMEOUT)
-		return SYS_ARCH_TIMEOUT;
+		return (err_t) SYS_ARCH_TIMEOUT;
 	sys_mbox_dopost(*mb, msg);
 	return ERR_OK;
 }
@@ -167,10 +167,9 @@ sys_mbox_trypost(sys_mbox_t *mb, void *msg)
 void
 sys_mbox_post(sys_mbox_t *mb, void *msg)
 {
-	int ret = sys_arch_sem_wait(&(*mb)->free, 0);
+	sys_arch_sem_wait(&(*mb)->free, 0);
 	// can't have timeout because of wait(0)
 	sys_mbox_dopost(*mb, msg);
-	return ERR_OK;
 }
 
 
@@ -221,18 +220,20 @@ sys_init(void)
 sys_thread_t
 sys_thread_new(const char *name, lwip_thread_fn function, void *arg, int stacksize, int prio)
 {
+	struct task_struct* tsk;
 	int pid = kernel_thread((int (*)(void*)) function, arg, 0);
 	if (pid <= 0) {
 		printk(KERN_ERR "lwip::sys_thread_new:kernel_thread %s failed\n", name);
 		return pid;
 	}
-	struct task_struct* tsk = find_task_by_vpid(pid);
+	tsk = find_task_by_vpid(pid);
 	if (tsk == NULL) {
 		printk(KERN_ERR "lwip::sys_thread_new:find_task_by_vpid %s failed\n", name);
 		return -1;
 	}
 	set_task_comm(tsk, name);
 	// ignore stack size and prio now
+	return pid;
 }
 
 

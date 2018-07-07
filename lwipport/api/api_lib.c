@@ -342,7 +342,7 @@ static err_t
 netconn_recv_data(struct netconn *conn, void **new_buf)
 {
   void *buf = NULL;
-  u16_t len;
+  u16_t len = 0;
   err_t err;
 #if LWIP_TCP
   struct api_msg msg;
@@ -492,6 +492,7 @@ netconn_recv(struct netconn *conn, struct netbuf **new_buf)
     return netconn_recv_data(conn, (void **)new_buf);
 #endif /* (LWIP_UDP || LWIP_RAW) */
   }
+  return 0;
 }
 
 /**

@@ -48,7 +48,6 @@
 #include <linux/lwip/lwip/netif.h>
 #include <linux/lwip/lwip/raw.h>
 #include <linux/lwip/lwip/stats.h>
-#include <linux/lwip/arch/perf.h>
 
 #include <linux/string.h>
 

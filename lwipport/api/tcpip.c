@@ -172,7 +172,7 @@ tcpip_input(struct pbuf *p, struct netif *inp)
 #else /* LWIP_TCPIP_CORE_LOCKING_INPUT */
   struct tcpip_msg *msg;
 
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     msg = (struct tcpip_msg *)memp_malloc(MEMP_TCPIP_MSG_INPKT);
     if (msg == NULL) {
       return ERR_MEM;
@@ -207,7 +207,7 @@ tcpip_callback_with_block(tcpip_callback_fn function, void *ctx, u8_t block)
 {
   struct tcpip_msg *msg;
 
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     msg = (struct tcpip_msg *)memp_malloc(MEMP_TCPIP_MSG_API);
     if (msg == NULL) {
       return ERR_MEM;
@@ -243,7 +243,7 @@ tcpip_timeout(u32_t msecs, sys_timeout_handler h, void *arg)
 {
   struct tcpip_msg *msg;
 
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     msg = (struct tcpip_msg *)memp_malloc(MEMP_TCPIP_MSG_API);
     if (msg == NULL) {
       return ERR_MEM;
@@ -272,7 +272,7 @@ tcpip_untimeout(sys_timeout_handler h, void *arg)
 {
   struct tcpip_msg *msg;
 
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     msg = (struct tcpip_msg *)memp_malloc(MEMP_TCPIP_MSG_API);
     if (msg == NULL) {
       return ERR_MEM;
@@ -306,7 +306,7 @@ tcpip_apimsg(struct api_msg *apimsg)
   apimsg->msg.err = ERR_VAL;
 #endif
   
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     msg.type = TCPIP_MSG_API;
     msg.msg.apimsg = apimsg;
     sys_mbox_post(&mbox, &msg);
@@ -356,7 +356,7 @@ tcpip_netifapi(struct netifapi_msg* netifapimsg)
 {
   struct tcpip_msg msg;
   
-  if (sys_mbox_valid(&mbox)) {
+  if (__sys_mbox_valid(&mbox)) {
     err_t err = sys_sem_new(&netifapimsg->msg.sem, 0);
     if (err != ERR_OK) {
       netifapimsg->msg.err = err;

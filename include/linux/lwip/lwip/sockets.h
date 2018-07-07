@@ -234,32 +234,32 @@ typedef struct ip_mreq {
 #if !defined(FIONREAD) || !defined(FIONBIO)
 #define IOCPARM_MASK    0x7fU           /* parameters must be < 128 bytes */
 #define IOC_VOID        0x20000000UL    /* no parameters */
-#define IOC_OUT         0x40000000UL    /* copy out parameters */
-#define IOC_IN          0x80000000UL    /* copy in parameters */
-#define IOC_INOUT       (IOC_IN|IOC_OUT)
+#define lwip_IOC_OUT         0x40000000UL    /* copy out parameters */
+#define lwip_IOC_IN          0x80000000UL    /* copy in parameters */
+#define lwip_IOC_INOUT       (lwip_IOC_IN|lwip_IOC_OUT)
                                         /* 0x20000000 distinguishes new &
                                            old ioctl's */
-#define _IO(x,y)        (IOC_VOID|((x)<<8)|(y))
+#define lwip__IO(x,y)        (IOC_VOID|((x)<<8)|(y))
 
-#define _IOR(x,y,t)     (IOC_OUT|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
+#define lwip__IOR(x,y,t)     (lwip_IOC_OUT|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
 
-#define _IOW(x,y,t)     (IOC_IN|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
+#define lwip__IOW(x,y,t)     (lwip_IOC_IN|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
 #endif /* !defined(FIONREAD) || !defined(FIONBIO) */
 
 #ifndef FIONREAD
-#define FIONREAD    _IOR('f', 127, unsigned long) /* get # bytes to read */
+#define FIONREAD    lwip__IOR('f', 127, unsigned long) /* get # bytes to read */
 #endif
 #ifndef FIONBIO
-#define FIONBIO     _IOW('f', 126, unsigned long) /* set/clear non-blocking i/o */
+#define FIONBIO     lwip__IOW('f', 126, unsigned long) /* set/clear non-blocking i/o */
 #endif
 
 /* Socket I/O Controls: unimplemented */
 #ifndef SIOCSHIWAT
-#define SIOCSHIWAT  _IOW('s',  0, unsigned long)  /* set high watermark */
-#define SIOCGHIWAT  _IOR('s',  1, unsigned long)  /* get high watermark */
-#define SIOCSLOWAT  _IOW('s',  2, unsigned long)  /* set low watermark */
-#define SIOCGLOWAT  _IOR('s',  3, unsigned long)  /* get low watermark */
-#define SIOCATMARK  _IOR('s',  7, unsigned long)  /* at oob mark? */
+#define SIOCSHIWAT  lwip__IOW('s',  0, unsigned long)  /* set high watermark */
+#define SIOCGHIWAT  lwip__IOR('s',  1, unsigned long)  /* get high watermark */
+#define SIOCSLOWAT  lwip__IOW('s',  2, unsigned long)  /* set low watermark */
+#define SIOCGLOWAT  lwip__IOR('s',  3, unsigned long)  /* get low watermark */
+#define SIOCATMARK  lwip__IOR('s',  7, unsigned long)  /* at oob mark? */
 #endif
 
 /* commands for fnctl */
