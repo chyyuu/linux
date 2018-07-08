@@ -1,0 +1,17 @@
+obj-$(CONFIG_LWIP)	+=	def.o
+obj-$(CONFIG_LWIP)	+=	syscall.o
+obj-$(CONFIG_LWIP)	+=	dhcp.o
+obj-$(CONFIG_LWIP)	+=	dns.o
+obj-$(CONFIG_LWIP)	+=	init.o
+obj-$(CONFIG_LWIP)	+=	mem.o
+obj-$(CONFIG_LWIP)	+=	memp.o
+obj-$(CONFIG_LWIP)	+=	netif.o
+obj-$(CONFIG_LWIP)	+=	pbuf.o
+obj-$(CONFIG_LWIP)	+=	raw.o
+obj-$(CONFIG_LWIP)	+=	stats.o
+obj-$(CONFIG_LWIP)	+=	sys.o
+obj-$(CONFIG_LWIP)	+=	tcp.o
+obj-$(CONFIG_LWIP)	+=	tcp_in.o
+obj-$(CONFIG_LWIP)	+=	tcp_out.o
+obj-$(CONFIG_LWIP)	+=	timers.o
+obj-$(CONFIG_LWIP)	+=	udp.o
