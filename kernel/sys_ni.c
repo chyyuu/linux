@@ -249,3 +249,6 @@ cond_syscall(sys_execveat);
 
 /* membarrier */
 cond_syscall(sys_membarrier);
+
+/* lwipport/core/syscall.c */
+cond_syscall(sys_lwip_closesock);
