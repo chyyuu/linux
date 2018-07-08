@@ -243,3 +243,7 @@ cond_syscall(sys_bpf);
 
 /* execveat */
 cond_syscall(sys_execveat);
+
+
+/* lwipport/core/syscall.c */
+cond_syscall(sys_lwip_closesock);
