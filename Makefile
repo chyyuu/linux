@@ -980,6 +980,19 @@ ifdef CONFIG_STACK_VALIDATION
   endif
 endif
 
+ifeq ($(cc-name),clang)
+ifneq ($(CROSS_COMPILE),)
+CLANG_TARGET   := -target $(notdir $(CROSS_COMPILE:%-=%))
+GCC_TOOLCHAIN  := $(dir $(CROSS_COMPILE))
+endif
+ifneq ($(GCC_TOOLCHAIN),)
+CLANG_GCC_TC   := -gcc-toolchain $(GCC_TOOLCHAIN)
+endif
+ifneq ($(CLANG_ENABLE_IA),1)
+CLANG_IA_FLAG  = -no-integrated-as
+endif
+CLANG_FLAGS    := $(CLANG_TARGET) $(CLANG_GCC_TC) $(CLANG_IA_FLAG)
+endif
 
 ifeq ($(KBUILD_EXTMOD),)
 core-y		+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/
@@ -1720,6 +1733,10 @@ endif
 %.symtypes: %.c prepare scripts FORCE
 	$(Q)$(MAKE) $(build)=$(build-dir) $(target-dir)$(notdir $@)
 %.ll: %.c prepare scripts FORCE
+	$(Q)$(MAKE) $(build)=$(build-dir) $(target-dir)$(notdir $@)
+%.ll: %.c prepare scripts FORCE
+	$(Q)$(MAKE) $(build)=$(build-dir) $(target-dir)$(notdir $@)
+%.ll: %.S prepare scripts FORCE
 	$(Q)$(MAKE) $(build)=$(build-dir) $(target-dir)$(notdir $@)
 
 # Modules

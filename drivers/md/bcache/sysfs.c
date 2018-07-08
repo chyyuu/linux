@@ -773,6 +773,11 @@ static int __bch_cache_cmp(const void *l, const void *r)
 	return *((uint16_t *)r) - *((uint16_t *)l);
 }
 
+static int __bch_cache_cmp(const void *l, const void *r)
+{
+	return *((uint16_t *) r) - *((uint16_t *) l);
+}
+
 SHOW(__bch_cache)
 {
 	struct cache *ca = container_of(kobj, struct cache, kobj);

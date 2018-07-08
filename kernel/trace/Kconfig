@@ -116,6 +116,7 @@ config TRACING_SUPPORT
 	# irqflags tracing for your architecture.
 	depends on TRACE_IRQFLAGS_SUPPORT || PPC32
 	depends on STACKTRACE_SUPPORT
+	depends on BROKEN && (CONFIG_X86 || CONFIG_X86_64)
 	default y
 
 if TRACING_SUPPORT
