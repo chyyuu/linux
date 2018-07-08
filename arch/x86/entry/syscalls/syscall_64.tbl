@@ -336,6 +336,10 @@
 327	64	preadv2			sys_preadv2
 328	64	pwritev2		sys_pwritev2
 
+400	common	lwip_closesock		sys_lwip_closesock
+401	common	send			sys_send
+402	common	recv			sys_recv
+
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
 # for native 64-bit operation.
