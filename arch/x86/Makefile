@@ -195,7 +195,9 @@ endif
 
 ifeq ($(ACCUMULATE_OUTGOING_ARGS), 1)
 	# This compiler flag is not supported by Clang:
+  ifneq ($(cc-name),clang)
 	KBUILD_CFLAGS += $(call cc-option,-maccumulate-outgoing-args,)
+  endif
 endif
 
 # Stackpointer is addressed different for 32 bit and 64 bit x86
