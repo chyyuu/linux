@@ -211,26 +211,27 @@ do {									\
 #define percpu_stable_op(op, var)			\
 ({							\
 	typeof(var) pfo_ret__;				\
+	void *__p = &(var);                             \
 	switch (sizeof(var)) {				\
 	case 1:						\
 		asm(op "b "__percpu_arg(P1)",%0"	\
 		    : "=q" (pfo_ret__)			\
-		    : "p" (&(var)));			\
+		    : "p" (__p));			\
 		break;					\
 	case 2:						\
 		asm(op "w "__percpu_arg(P1)",%0"	\
 		    : "=r" (pfo_ret__)			\
-		    : "p" (&(var)));			\
+		    : "p" (__p));			\
 		break;					\
 	case 4:						\
 		asm(op "l "__percpu_arg(P1)",%0"	\
 		    : "=r" (pfo_ret__)			\
-		    : "p" (&(var)));			\
+		    : "p" (__p));			\
 		break;					\
 	case 8:						\
 		asm(op "q "__percpu_arg(P1)",%0"	\
 		    : "=r" (pfo_ret__)			\
-		    : "p" (&(var)));			\
+		    : "p" (__p));			\
 		break;					\
 	default: __bad_percpu_size();			\
 	}						\
