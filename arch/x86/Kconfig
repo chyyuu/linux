@@ -2793,6 +2793,8 @@ config X86_DMA_REMAP
 	bool
 	depends on STA2X11
 
+source "lwipport/Kconfig"
+
 source "net/Kconfig"
 
 source "drivers/Kconfig"
