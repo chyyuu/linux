@@ -339,6 +339,10 @@
 330	common	pkey_alloc		sys_pkey_alloc
 331	common	pkey_free		sys_pkey_free
 
+400	common	lwip_closesock		sys_lwip_closesock
+401	common	send			sys_send
+402	common	recv			sys_recv
+
 #
 # x32-specific system call numbers start at 512 to avoid cache impact
 # for native 64-bit operation.

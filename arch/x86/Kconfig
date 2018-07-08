@@ -2793,6 +2793,8 @@ config PMC_ATOM
 	def_bool y
         depends on PCI
 
+source "lwipport/Kconfig"
+
 source "net/Kconfig"
 
 source "drivers/Kconfig"
