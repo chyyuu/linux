@@ -259,3 +259,9 @@ cond_syscall(sys_membarrier);
 cond_syscall(sys_pkey_mprotect);
 cond_syscall(sys_pkey_alloc);
 cond_syscall(sys_pkey_free);
+
+/* lwipport/core/syscall.c */
+cond_syscall(lwip_closesock);
+cond_syscall(send);
+cond_syscall(recv);
+
