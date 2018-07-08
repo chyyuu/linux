@@ -64,7 +64,13 @@ static int detect_memory_e820(void)
 			break;
 		}
 
+/* Workaround LLVM Bug PR3997 */
+#ifdef __clang__
+		memcpy(desc, &buf, sizeof(*desc));
+		desc++;
+#else
 		*desc++ = buf;
+#endif /* __clang__ */
 		count++;
 	} while (ireg.ebx && count < ARRAY_SIZE(boot_params.e820_table));
 
