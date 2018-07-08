@@ -1,0 +1,6 @@
+menuconfig LWIP
+	bool "a test LWIP port"
+	depends on !NET
+	---help---
+		Unless you know that you are doing, select no here
+

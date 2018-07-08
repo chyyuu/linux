@@ -1,0 +1,6 @@
+modules.builtin
+modules.order
+.cache.mk
+.*.cmd
+*.a
+*.o
